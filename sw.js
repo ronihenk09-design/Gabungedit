@@ -1,9 +1,53 @@
-// File Service Worker minimal untuk memicu PWA Install
-self.addEventListener('install', (e) => {
-    console.log('[Service Worker] Terinstal');
-    self.skipWaiting();
+// Ganti nama versi cache jika ada pembaruan pada index.html atau aset lainnya
+const CACHE_NAME = 'gabungvideo-cache-v2';
+
+// Daftar file yang disimpan agar web bisa dimuat sangat cepat & offline
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/manifest.json'
+];
+
+// Proses Install & Simpan Cache
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+      })
+  );
+  self.skipWaiting();
 });
 
-self.addEventListener('fetch', (e) => {
-    // Wajib ada event fetch agar Chrome mengenali ini sebagai PWA yang bisa diinstal
+// Proses Activate & Hapus Cache Lama
+self.addEventListener('activate', event => {
+  const cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            console.log('Menghapus cache lama:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+  self.clients.claim();
 });
+
+// Proses Fetch (Mengambil dari cache jika ada)
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
+      })
+  );
+});
+      
