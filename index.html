@@ -6,9 +6,35 @@
     <title>GabungVideo - Satukan Momen Anda</title>
     
     <!-- PWA Meta Tags & Manifest -->
-    <meta name="description" content="Aplikasi web gratis untuk menggabungkan banyak video secara online.">
+    <meta name="description" content="Aplikasi web gratis untuk menggabungkan banyak video secara online tanpa watermark, diproses langsung di HP Anda (aman & privat).">
     <meta name="theme-color" content="#2563eb">
     <link rel="manifest" href="manifest.json">
+    
+    <!-- Data Terstruktur untuk Mesin Pencari AI & SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "GabungVideo",
+      "url": "https://gabungvideo.online",
+      "description": "Aplikasi web gratis berbasis PWA untuk menggabungkan banyak video secara online tanpa watermark. Memiliki fitur rendering lokal client-side sehingga privasi aman tanpa unggah ke server. Mendukung durasi hingga 25 menit.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires HTML5 Canvas and MediaRecorder API support",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "IDR"
+      },
+      "featureList": [
+        "Gabung video gratis tanpa watermark",
+        "Mendukung total durasi hingga 25 menit",
+        "Bisa tambah watermark logo kustom",
+        "Rendering lokal (Client-side) yang aman privasi",
+        "Mendukung PWA (Bisa diinstal ke layar HP)"
+      ]
+    }
+    </script>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -155,7 +181,7 @@
                 Gabungkan Video <br> dengan <span class="gradient-text">Sangat Mudah</span>
             </h1>
             <p class="text-slate-500 text-sm sm:text-base mb-8">
-                Satukan momen berharga Anda. Tidak perlu instalasi rumit, cukup pilih video dari galeri Anda, susun, dan simpan hasilnya.
+                Satukan momen berharga Anda hingga durasi 25 menit. Tidak perlu instalasi rumit, cukup pilih video dari galeri Anda, susun, dan simpan hasilnya.
             </p>
         </div>
 
@@ -164,7 +190,7 @@
             <!-- Pesan Error -->
             <div id="error-msg" class="hidden mb-6 p-4 bg-red-50 text-red-600 text-sm rounded-xl text-center items-center justify-center gap-2 font-medium border border-red-100 transition-all">
                 <i class="fas fa-exclamation-circle text-lg"></i>
-                <span id="error-text">Total durasi melebihi batas 5 menit!</span>
+                <span id="error-text">Total durasi melebihi batas maksimal 25 menit!</span>
             </div>
 
             <!-- AREA UPLOAD -->
@@ -173,7 +199,7 @@
                     <i class="fas fa-cloud-upload-alt"></i>
                 </div>
                 <h3 class="text-lg font-semibold text-brand-navy mb-1 pointer-events-none">Sentuh untuk Pilih Video</h3>
-                <p class="text-sm text-slate-400 mb-6 pointer-events-none">Format: MP4, WebM (Maks 5 Menit)</p>
+                <p class="text-sm text-slate-400 mb-6 pointer-events-none">Format: MP4, WebM (Maksimal Durasi Total 25 Menit)</p>
                 <button class="gradient-bg text-white px-6 py-2.5 rounded-full font-medium text-sm shadow-glow hover:shadow-lg transition-all active:scale-95 pointer-events-none">
                     Buka Galeri
                 </button>
@@ -222,11 +248,19 @@
                 </button>
             </div>
 
+            <!-- AREA LOADING / MENYIAPKAN VIDEO -->
+            <div id="loading-media-area" class="hidden text-center py-6">
+                <div class="w-12 h-12 border-4 border-purple-100 border-t-brand-purple rounded-full animate-spin mx-auto mb-4"></div>
+                <h3 class="font-bold text-brand-navy text-base mb-1">Menyiapkan media yang dipilih...</h3>
+                <p id="loading-counter" class="text-xs text-slate-500 font-medium">Memuat file... (0 detik)</p>
+            </div>
+
             <!-- AREA PROCESSING -->
             <div id="processing-area" class="hidden text-center py-6">
                 <div class="w-16 h-16 border-4 border-blue-100 border-t-brand-blue rounded-full animate-spin mx-auto mb-6"></div>
                 <h2 class="text-2xl font-bold text-brand-navy mb-2">Merender Video...</h2>
-                <p id="process-status" class="text-slate-500 mb-8 text-sm">Perekaman berjalan, harap jangan tutup halaman ini...</p>
+                <p id="process-status" class="text-slate-500 mb-2 text-sm">Proses durasi panjang berjalan, harap biarkan layar tetap menyala...</p>
+                <p id="countdown-timer" class="text-xs font-semibold text-brand-purple mb-6 bg-purple-50 py-1.5 px-4 rounded-full inline-block border border-purple-100">Sisa waktu merender: <span id="timer-value">Menghitung...</span></p>
                 
                 <div class="w-full bg-slate-100 rounded-full h-3 mb-2 overflow-hidden shadow-inner">
                     <div id="progress-bar" class="gradient-bg h-3 rounded-full transition-all duration-200 ease-linear" style="width: 0%"></div>
@@ -240,7 +274,7 @@
                     <i class="fas fa-check"></i>
                 </div>
                 <h3 class="text-2xl font-bold text-brand-navy mb-2">Selesai Dirender!</h3>
-                <p class="text-slate-500 text-sm mb-8">Video Anda siap diunduh ke perangkat.</p>
+                <p class="text-slate-500 text-sm mb-8">Video panjang Anda siap diunduh ke perangkat.</p>
                 
                 <a id="download-btn" href="#" class="wave-btn w-full py-4 rounded-xl font-semibold text-lg shadow-soft hover:shadow-lg transition-all active:scale-[0.98] flex items-center justify-center mb-5 block">
                     <div class="wave-fill"></div>
@@ -305,491 +339,4 @@
                     </div>
                 </details>
                 <details class="bg-white rounded-2xl shadow-sm border border-slate-100 group overflow-hidden">
-                    <summary class="flex justify-between items-center font-medium text-brand-navy p-5 cursor-pointer select-none">
-                        Berapa batas maksimal durasi video?
-                        <span class="transition group-open:rotate-180 text-brand-blue"><i class="fas fa-chevron-down"></i></span>
-                    </summary>
-                    <div class="text-sm text-slate-500 px-5 pb-5 leading-relaxed">
-                        Batas maksimal total durasi yang diizinkan adalah 5 menit (300 detik) untuk menjaga performa HP saat merender video.
-                    </div>
-                </details>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER LENGKAP -->
-    <footer class="bg-brand-navy text-slate-300 py-16 mt-auto border-t-4 border-brand-blue">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-12">
-                <div class="col-span-2 flex flex-col items-start">
-                    <a href="#" class="flex items-center gap-2 mb-4">
-                        <div class="w-8 h-8 rounded-lg gradient-bg flex items-center justify-center text-white">
-                            <i class="fas fa-photo-video text-sm"></i>
-                        </div>
-                        <span class="font-bold text-xl tracking-tight text-white">Gabung<span class="text-brand-blue">Video</span></span>
-                    </a>
-                    <p class="text-sm text-slate-400 mb-6 max-w-sm leading-relaxed">
-                        Solusi terbaik untuk menggabungkan video secara instan tanpa perlu instalasi rumit.
-                    </p>
-                </div>
-                
-                <!-- Produk -->
-                <div>
-                    <h4 class="text-white font-semibold mb-4 text-sm tracking-wide">Produk</h4>
-                    <ul class="space-y-3 text-sm text-slate-400">
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Gabung Video</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Tambah watermark</a></li>
-                    </ul>
-                </div>
-
-                <!-- Bantuan -->
-                <div>
-                    <h4 class="text-white font-semibold mb-4 text-sm tracking-wide">Bantuan</h4>
-                    <ul class="space-y-3 text-sm text-slate-400">
-                        <li><a href="#faq" class="hover:text-brand-blue transition-colors">FAQ</a></li>
-                        <li><a href="#cara-pakai" class="hover:text-brand-blue transition-colors">Panduan</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Hubungi Kami</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Tentang Kami</a></li>
-                    </ul>
-                </div>
-
-                <!-- Legal -->
-                <div>
-                    <h4 class="text-white font-semibold mb-4 text-sm tracking-wide">Legal</h4>
-                    <ul class="space-y-3 text-sm text-slate-400">
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Terms of Service</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Cookie Policy</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Copyright Policy</a></li>
-                    </ul>
-                </div>
-
-                <!-- Lainnya -->
-                <div>
-                    <h4 class="text-white font-semibold mb-4 text-sm tracking-wide">Lainnya</h4>
-                    <ul class="space-y-3 text-sm text-slate-400">
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Disclaimer</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Keamanan</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Status Layanan</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
-                <p>&copy; 2026 GabungVideo.online. Hak Cipta Dilindungi.</p>
-                <div class="flex gap-4 text-lg">
-                    <a href="#" class="hover:text-white transition-colors"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- SCRIPT JAVASCRIPT & PWA -->
-    <script>
-        // ================= DAFTARKAN SERVICE WORKER =================
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('Service Worker Terdaftar!'))
-                    .catch(err => console.log('Gagal mendaftar Service Worker', err));
-            });
-        }
-
-        // ================= PWA INSTALLATION (SOLUSI TOMBOL) =================
-        const pwaInstallContainer = document.getElementById('pwa-install-container');
-        const pwaInstallBtn = document.getElementById('pwa-install-btn');
-        const pwaCloseBtn = document.getElementById('pwa-close-btn');
-        let deferredPrompt;
-
-        setTimeout(() => {
-            pwaInstallContainer.classList.remove('hidden');
-            pwaInstallContainer.classList.add('flex', 'banner-masuk');
-        }, 2000);
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e; 
-        });
-
-        pwaCloseBtn.addEventListener('click', () => {
-            pwaInstallContainer.classList.add('hidden');
-            pwaInstallContainer.classList.remove('flex');
-        });
-
-        pwaInstallBtn.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                // Jika dibuka di browser Chrome murni
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    pwaInstallContainer.classList.add('hidden');
-                }
-                deferredPrompt = null;
-            } else {
-                // Jika dibuka di dalam aplikasi pembungkus (AppsGeyser/Webview), 
-                // berikan panduan instan yang sangat mudah dipahami pengguna:
-                alert("Cara Memasang Aplikasi:\n\n1. Ketuk ikon titik tiga (⋮) di sudut kanan atas browser HP Anda.\n2. Pilih menu 'Tambahkan ke Layar Utama' atau 'Install App'.\n3. Pintasan GabungVideo akan langsung terpasang di menu HP Anda!");
-                pwaInstallContainer.classList.add('hidden');
-            }
-        });
-
-        // ================= LOGIKA WATERMARK =================
-        const watermarkInput = document.getElementById('watermark-input');
-        const watermarkName = document.getElementById('watermark-name');
-        const watermarkPreviewContainer = document.getElementById('watermark-preview-container');
-        const watermarkPreview = document.getElementById('watermark-preview');
-        const removeWatermarkBtn = document.getElementById('remove-watermark');
-        const watermarkPositionSelect = document.getElementById('watermark-position');
-        
-        let watermarkImageObj = null;
-
-        watermarkInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if(file) {
-                watermarkName.textContent = file.name;
-                const url = URL.createObjectURL(file);
-                watermarkPreview.src = url;
-                watermarkPreviewContainer.classList.remove('hidden');
-                
-                watermarkImageObj = new Image();
-                watermarkImageObj.src = url;
-            }
-        });
-
-        removeWatermarkBtn.addEventListener('click', () => {
-            watermarkInput.value = '';
-            watermarkName.textContent = 'Pilih gambar (PNG/JPG)...';
-            watermarkPreviewContainer.classList.add('hidden');
-            watermarkImageObj = null;
-        });
-
-        // ================= CORE APP LOGIC =================
-        const MAX_DURATION = 300; 
-        let selectedFiles = [];
-        let totalDuration = 0;
-
-        const dropZone = document.getElementById('upload-area');
-        const fileInput = document.getElementById('file-input');
-        const videoListArea = document.getElementById('video-list-area');
-        const fileList = document.getElementById('file-list');
-        const fileCountEl = document.getElementById('file-count');
-        const totalDurationEl = document.getElementById('total-duration');
-        const mergeBtn = document.getElementById('merge-btn');
-        const errorMsg = document.getElementById('error-msg');
-        
-        const formatTime = (seconds) => {
-            const m = Math.floor(seconds / 60).toString().padStart(2, '0');
-            const s = Math.floor(seconds % 60).toString().padStart(2, '0');
-            return `${m}:${s}`;
-        };
-
-        const getVideoMetadata = (file) => {
-            return new Promise((resolve) => {
-                const video = document.createElement('video');
-                video.preload = 'metadata';
-                video.src = URL.createObjectURL(file);
-                
-                const timeout = setTimeout(() => {
-                    resolve({ duration: video.duration || 0, width: video.videoWidth || 0, height: video.videoHeight || 0, thumb: null });
-                }, 1500);
-
-                video.onloadedmetadata = () => { video.currentTime = 0.5; };
-
-                video.onseeked = () => {
-                    clearTimeout(timeout);
-                    try {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = 100;
-                        canvas.height = 100;
-                        const ctx = canvas.getContext('2d');
-                        
-                        const ratio = video.videoWidth / video.videoHeight;
-                        let dw = canvas.width, dh = canvas.height, sx = 0, sy = 0;
-                        if (ratio > 1) { dw = canvas.height * ratio; sx = (canvas.width - dw) / 2; } 
-                        else { dh = canvas.width / ratio; sy = (canvas.height - dh) / 2; }
-                        
-                        ctx.drawImage(video, sx, sy, dw, dh);
-                        
-                        resolve({
-                            duration: video.duration,
-                            width: video.videoWidth,
-                            height: video.videoHeight,
-                            thumb: canvas.toDataURL('image/jpeg', 0.6)
-                        });
-                    } catch (e) {
-                        resolve({ duration: video.duration, width: video.videoWidth, height: video.videoHeight, thumb: null });
-                    }
-                };
-                
-                video.onerror = () => {
-                    clearTimeout(timeout);
-                    resolve({ duration: 0, width: 0, height: 0, thumb: null });
-                };
-            });
-        };
-
-        const updateUI = async () => {
-            fileList.innerHTML = '';
-            totalDuration = 0;
-
-            if (selectedFiles.length === 0) {
-                videoListArea.classList.add('hidden');
-                dropZone.classList.remove('hidden');
-                dropZone.classList.add('flex');
-                errorMsg.classList.add('hidden');
-                errorMsg.classList.remove('flex');
-                return;
-            }
-
-            dropZone.classList.add('hidden');
-            dropZone.classList.remove('flex');
-            videoListArea.classList.remove('hidden');
-            
-            for (let i = 0; i < selectedFiles.length; i++) {
-                const file = selectedFiles[i];
-                const meta = await getVideoMetadata(file);
-                totalDuration += meta.duration;
-                
-                const thumbHTML = meta.thumb 
-                    ? `<img src="${meta.thumb}" class="object-cover w-full h-full opacity-80 shadow-inner">`
-                    : `<i class="fas fa-video text-xl opacity-50"></i>`;
-                
-                const div = document.createElement('div');
-                div.className = 'flex items-center gap-3 p-3 bg-white border border-slate-100 rounded-xl shadow-sm mb-3 hover:shadow-md transition-shadow';
-                div.innerHTML = `
-                    <div class="w-14 h-14 bg-slate-800 rounded-lg flex-shrink-0 relative overflow-hidden flex items-center justify-center text-white">
-                        ${thumbHTML}
-                    </div>
-                    <div class="flex-grow overflow-hidden">
-                        <h4 class="font-medium text-sm text-brand-navy truncate">${file.name}</h4>
-                        <p class="text-xs text-slate-400 mt-0.5">${meta.width}x${meta.height} • ${formatTime(meta.duration)}</p>
-                    </div>
-                    <button class="text-slate-300 hover:text-red-500 transition-colors p-3" onclick="removeFile(${i})">
-                        <i class="fas fa-trash-alt text-lg"></i>
-                    </button>
-                `;
-                fileList.appendChild(div);
-            }
-
-            fileCountEl.textContent = selectedFiles.length;
-            totalDurationEl.textContent = formatTime(totalDuration);
-
-            if (totalDuration > MAX_DURATION) {
-                totalDurationEl.classList.replace('text-brand-blue', 'text-red-600');
-                totalDurationEl.classList.replace('bg-blue-50', 'bg-red-50');
-                totalDurationEl.classList.replace('border-blue-100', 'border-red-100');
-                mergeBtn.disabled = true;
-                errorMsg.classList.remove('hidden');
-                errorMsg.classList.add('flex');
-            } else {
-                totalDurationEl.classList.replace('text-red-600', 'text-brand-blue');
-                totalDurationEl.classList.replace('bg-red-50', 'bg-blue-50');
-                totalDurationEl.classList.replace('border-red-100', 'border-blue-100');
-                mergeBtn.disabled = false;
-                errorMsg.classList.add('hidden');
-                errorMsg.classList.remove('flex');
-            }
-        };
-
-        window.removeFile = (index) => {
-            selectedFiles.splice(index, 1);
-            updateUI();
-        };
-
-        dropZone.addEventListener('click', () => fileInput.click());
-        fileInput.addEventListener('change', function() { handleFiles(this.files); });
-        
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); }, false);
-        });
-        dropZone.addEventListener('drop', e => handleFiles(e.dataTransfer.files));
-
-        function handleFiles(files) {
-            const newFiles = Array.from(files).filter(file => file.type.startsWith('video/'));
-            selectedFiles = [...selectedFiles, ...newFiles];
-            updateUI();
-            fileInput.value = '';
-        }
-
-        function showSection(sectionId) {
-            ['upload-area', 'video-list-area', 'processing-area', 'result-area'].forEach(id => {
-                const el = document.getElementById(id);
-                el.classList.add('hidden');
-                if(id === 'upload-area') el.classList.remove('flex');
-            });
-            const target = document.getElementById(sectionId);
-            target.classList.remove('hidden');
-            if (sectionId === 'upload-area') target.classList.add('flex');
-        }
-
-        // ================= RENDERING DENGAN WATERMARK =================
-        mergeBtn.addEventListener('click', async () => {
-            if (selectedFiles.length === 0) return;
-            
-            showSection('processing-area');
-            const progressBar = document.getElementById('progress-bar');
-            const progressText = document.getElementById('progress-text');
-            const statusText = document.getElementById('process-status');
-
-            const firstVideoMeta = await getVideoMetadata(selectedFiles[0]);
-            const canvas = document.createElement('canvas');
-            canvas.width = firstVideoMeta.width || 1280; 
-            canvas.height = firstVideoMeta.height || 720;
-            const ctx = canvas.getContext('2d');
-
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            await audioCtx.resume(); 
-            const audioDest = audioCtx.createMediaStreamDestination();
-
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            gainNode.gain.value = 0; 
-            oscillator.connect(gainNode);
-            gainNode.connect(audioDest);
-            oscillator.start();
-
-            const canvasStream = canvas.captureStream(30); 
-            const combinedStream = new MediaStream([
-                ...canvasStream.getVideoTracks(),
-                ...audioDest.stream.getAudioTracks()
-            ]);
-
-            const recorder = new MediaRecorder(combinedStream, { mimeType: 'video/webm' });
-            const chunks = [];
-            recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
-
-            const recordingFinished = new Promise(resolve => {
-                recorder.onstop = () => resolve(new Blob(chunks, { type: 'video/webm' }));
-            });
-
-            recorder.start();
-            let elapsedDuration = 0;
-
-            for (let i = 0; i < selectedFiles.length; i++) {
-                const file = selectedFiles[i];
-                statusText.textContent = `Memproses Video ${i + 1} dari ${selectedFiles.length}...`;
-
-                await new Promise((resolve) => {
-                    const video = document.createElement('video');
-                    video.src = URL.createObjectURL(file);
-                    video.crossOrigin = 'anonymous';
-                    
-                    const sourceNode = audioCtx.createMediaElementSource(video);
-                    sourceNode.connect(audioDest);
-
-                    const renderFrame = () => {
-                        if (!video.paused && !video.ended) {
-                            ctx.fillStyle = '#000000';
-                            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                            const videoRatio = video.videoWidth / video.videoHeight;
-                            const canvasRatio = canvas.width / canvas.height;
-                            let drawWidth, drawHeight, startX, startY;
-
-                            if (videoRatio > canvasRatio) {
-                                drawWidth = canvas.width;
-                                drawHeight = canvas.width / videoRatio;
-                                startX = 0;
-                                startY = (canvas.height - drawHeight) / 2;
-                            } else {
-                                drawHeight = canvas.height;
-                                drawWidth = canvas.height * videoRatio;
-                                startX = (canvas.width - drawWidth) / 2;
-                                startY = 0;
-                            }
-
-                            ctx.drawImage(video, startX, startY, drawWidth, drawHeight);
-                            
-                            if (watermarkImageObj && watermarkImageObj.complete) {
-                                const maxW = canvas.width * 0.15;
-                                const scale = maxW / watermarkImageObj.width;
-                                const wmWidth = watermarkImageObj.width * scale;
-                                const wmHeight = watermarkImageObj.height * scale;
-                                
-                                let wmX = 0, wmY = 0;
-                                const padding = 30;
-                                
-                                switch(watermarkPositionSelect.value) {
-                                    case 'top-left':
-                                        wmX = padding; wmY = padding; break;
-                                    case 'top-right':
-                                        wmX = canvas.width - wmWidth - padding; wmY = padding; break;
-                                    case 'bottom-left':
-                                        wmX = padding; wmY = canvas.height - wmHeight - padding; break;
-                                    case 'bottom-right':
-                                    default:
-                                        wmX = canvas.width - wmWidth - padding; wmY = canvas.height - wmHeight - padding; break;
-                                }
-                                ctx.drawImage(watermarkImageObj, wmX, wmY, wmWidth, wmHeight);
-                            }
-
-                            const currentTotal = elapsedDuration + video.currentTime;
-                            const percent = Math.min(100, Math.round((currentTotal / totalDuration) * 100));
-                            progressBar.style.width = `${percent}%`;
-                            progressText.textContent = `${percent}%`;
-
-                            requestAnimationFrame(renderFrame);
-                        }
-                    };
-
-                    video.onplay = () => renderFrame();
-                    video.onended = () => {
-                        elapsedDuration += video.duration;
-                        sourceNode.disconnect(); 
-                        URL.revokeObjectURL(video.src);
-                        resolve();
-                    };
-                    video.onerror = () => resolve(); 
-                    
-                    video.play().catch(e => console.error("Play error:", e));
-                });
-            }
-
-            oscillator.stop();
-            recorder.stop();
-            
-            const finalBlob = await recordingFinished;
-            const finalUrl = URL.createObjectURL(finalBlob);
-
-            const downloadBtn = document.getElementById('download-btn');
-            downloadBtn.href = finalUrl;
-            downloadBtn.download = `GabungVideo_Hasil_${new Date().getTime()}.webm`;
-
-            showSection('result-area');
-        });
-
-        // WAVE DOWNLOAD
-        const downloadBtn = document.getElementById('download-btn');
-        downloadBtn.addEventListener('click', () => {
-            if (downloadBtn.classList.contains('downloading')) return; 
-            
-            const text = document.getElementById('wave-text');
-            downloadBtn.classList.add('downloading');
-            text.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyiapkan File...';
-
-            setTimeout(() => {
-                text.innerHTML = '<i class="fas fa-check-circle"></i> Berhasil Disimpan!';
-                setTimeout(() => {
-                    downloadBtn.classList.remove('downloading');
-                    text.innerHTML = '<i class="fas fa-download"></i> Unduh Video Hasil';
-                }, 2500);
-            }, 3000); 
-        });
-
-        function resetApp() {
-            selectedFiles = [];
-            watermarkInput.value = '';
-            watermarkName.textContent = 'Pilih gambar (PNG/JPG)...';
-            watermarkPreviewContainer.classList.add('hidden');
-            watermarkImageObj = null;
-
-            updateUI();
-            showSection('upload-area');
-            document.getElementById('progress-bar').style.width = '0%';
-            document.getElementById('progress-text').textContent = '0%';
-        }
-    </script>
-</body>
-</html>
+          
