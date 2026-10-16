@@ -151,6 +151,20 @@
         </div>
     </div>
 
+    <!-- MODAL POPUP INFORMASI MENU FOOTER -->
+    <div id="info-modal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl relative border border-slate-100 max-h-[85vh] overflow-y-auto custom-scrollbar">
+            <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 transition-colors">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+            <h3 id="modal-title" class="text-xl font-bold text-brand-navy mb-4 pr-8">Judul Menu</h3>
+            <div id="modal-content" class="text-sm text-slate-600 space-y-3 leading-relaxed"></div>
+            <div class="mt-6 pt-4 border-t border-slate-100 text-right">
+                <button onclick="closeModal()" class="gradient-bg text-white px-6 py-2.5 rounded-full text-sm font-medium shadow-glow active:scale-95">Tutup</button>
+            </div>
+        </div>
+    </div>
+
     <!-- HEADER -->
     <header class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-40 border-b border-slate-200/50 transition-all">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -367,40 +381,44 @@
                     </p>
                 </div>
                 
+                <!-- Produk -->
                 <div>
                     <h4 class="text-white font-semibold mb-4 text-sm tracking-wide">Produk</h4>
                     <ul class="space-y-3 text-sm text-slate-400">
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Gabung Video</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Tambah watermark</a></li>
+                        <li><a href="#beranda" class="hover:text-brand-blue transition-colors">Gabung Video</a></li>
+                        <li><a href="#beranda" class="hover:text-brand-blue transition-colors" onclick="openModal('Tambah Watermark', 'Fitur Tambah Watermark memungkinkan Anda menyematkan logo atau gambar (PNG/JPG) di sudut video hasil gabungan secara otomatis tanpa biaya tambahan.')">Tambah watermark</a></li>
                     </ul>
                 </div>
 
+                <!-- Bantuan -->
                 <div>
                     <h4 class="text-white font-semibold mb-4 text-sm tracking-wide">Bantuan</h4>
                     <ul class="space-y-3 text-sm text-slate-400">
                         <li><a href="#faq" class="hover:text-brand-blue transition-colors">FAQ</a></li>
                         <li><a href="#cara-pakai" class="hover:text-brand-blue transition-colors">Panduan</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Hubungi Kami</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Tentang Kami</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Hubungi Kami', 'Anda dapat menghubungi tim dukungan GabungVideo melalui email di support@gabungvideo.online untuk masukan, kendala teknis, atau pertanyaan seputar layanan.')">Hubungi Kami</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Tentang Kami', 'GabungVideo adalah platform berbasis web PWA yang dirancang untuk memudahkan pengguna menggabungkan file video secara lokal di perangkat tanpa proses unggah ke server luar, menjaga keamanan privasi 100%.')">Tentang Kami</a></li>
                     </ul>
                 </div>
 
+                <!-- Legal -->
                 <div>
                     <h4 class="text-white font-semibold mb-4 text-sm tracking-wide">Legal</h4>
                     <ul class="space-y-3 text-sm text-slate-400">
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Terms of Service</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Cookie Policy</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Copyright Policy</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Privacy Policy', 'Kebijakan Privasi: Kami tidak pernah menyimpan, merekam, atau mengunggah video Anda ke server kami. Semua proses penggabungan video berjalan secara lokal di dalam browser perangkat Anda.')">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Terms of Service', 'Ketentuan Layanan: Layanan ini disediakan secara gratis untuk penggunaan pribadi maupun profesional. Pengguna bertanggung jawab penuh atas konten video yang mereka gabungkan.')">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Cookie Policy', 'Kebijakan Cookie: Kami menggunakan penyimpanan lokal (localStorage) browser semata-mata untuk menyimpan preferensi aplikasi dan riwayat penggunaan demi kenyamanan Anda.')">Cookie Policy</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Copyright Policy', 'Kebijakan Hak Cipta: GabungVideo menghormati hak kekayaan intelektual. Pastikan Anda memiliki hak cipta atau izin atas video yang Anda gabungkan.')">Copyright Policy</a></li>
                     </ul>
                 </div>
 
+                <!-- Lainnya -->
                 <div>
                     <h4 class="text-white font-semibold mb-4 text-sm tracking-wide">Lainnya</h4>
                     <ul class="space-y-3 text-sm text-slate-400">
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Disclaimer</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Keamanan</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors">Status Layanan</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Disclaimer', 'Penafian: Layanan disediakan apa adanya tanpa garansi kelancaran penuh pada perangkat dengan spesifikasi RAM yang sangat terbatas.')">Disclaimer</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Keamanan', 'Keamanan: Karena pemrosesan video dilakukan secara client-side, data video Anda aman dari risiko kebocoran data di server pihak ketiga.')">Keamanan</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Status Layanan', 'Status Layanan: Semua sistem server web dan modul PWA GabungVideo saat ini beroperasi dengan normal (100% Uptime).')">Status Layanan</a></li>
                     </ul>
                 </div>
             </div>
@@ -418,6 +436,20 @@
 
     <!-- SCRIPT JAVASCRIPT & PWA -->
     <script>
+        // ads.js belum aktif - placeholder
+        console.log("ads.js siap, belum ada iklan");
+
+        function openModal(title, content) {
+            event.preventDefault();
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-content').innerHTML = `<p>${content}</p>`;
+            document.getElementById('info-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('info-modal').classList.add('hidden');
+        }
+
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
