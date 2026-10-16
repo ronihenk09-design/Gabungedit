@@ -1,9 +1,9 @@
-const CACHE_NAME = 'gabungvideo-v4';
+const CACHE_NAME = 'gabungvideo-v5';
 const CORE_ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './icon-512x512.png'
+  './favicon-512.png'
 ];
 
 // Install - cache core aja
@@ -16,7 +16,7 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Activate - hapus cache lama v1,v2,v3 biar icon hati hilang!
+// Activate - hapus cache lama v1,v2,v3,v4
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -37,18 +37,18 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = event.request.url;
 
-  // 1. JANGAN CACHE IKLAN ADSTERRA & ANALYTICS (biar cuan jalan)
+  // 1. JANGAN CACHE IKLAN ADSTERRA & ANALYTICS
   if (
     url.includes('highperformanceformat.com') ||
     url.includes('adsterra') ||
     url.includes('googlesyndication') ||
     url.includes('google-analytics')
   ) {
-    return; // biarkan lewat tanpa di-cache
+    return;
   }
 
-  // 2. Untuk manifest & icon: NETWORK FIRST (biar icon baru langsung kelihatan)
-  if (url.includes('manifest.json') || url.includes('icon-')) {
+  // 2. Untuk manifest & icon: NETWORK FIRST
+  if (url.includes('manifest.json') || url.includes('favicon-') || url.includes('icon-')) {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
@@ -62,7 +62,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 3. Untuk file lain: CACHE FIRST (biar cepat)
+  // 3. Untuk file lain: CACHE FIRST
   event.respondWith(
     caches.match(event.request).then((cached) => {
       return cached || fetch(event.request);
