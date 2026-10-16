@@ -712,8 +712,12 @@
 
             const firstVideoMeta = await getVideoMetadata(selectedFiles[0]);
             const canvas = document.createElement('canvas');
-            canvas.width = firstVideoMeta.width || 1280; 
-            canvas.height = firstVideoMeta.height || 720;
+            
+            // OPTIMASI RAM: Batasi maks 720p (720x405 max untuk 16:9) agar HP tidak crash
+            const maxW = 720;
+            canvas.width = Math.min(firstVideoMeta.width || 720, maxW);
+            canvas.height = Math.min(firstVideoMeta.height || 720, maxW * 0.5625);
+
             const ctx = canvas.getContext('2d');
 
             const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -727,7 +731,8 @@
             gainNode.connect(audioDest);
             oscillator.start();
 
-            const canvasStream = canvas.captureStream(30); 
+            // OPTIMASI FPS: Turunkan dari 30fps ke 24fps agar render lebih ringan
+            const canvasStream = canvas.captureStream(24); 
             const combinedStream = new MediaStream([
                 ...canvasStream.getVideoTracks(),
                 ...audioDest.stream.getAudioTracks()
