@@ -5,10 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>GabungVideo - Satukan Momen Anda</title>
     
-    <!-- PWA Meta Tags & Manifest -->
+    <!-- Favicon & PWA Icons Terbaru -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+    <link rel="apple-touch-icon" href="/favicon-180.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- PWA Meta Tags -->
     <meta name="description" content="Aplikasi web gratis untuk menggabungkan banyak video secara online tanpa watermark, diproses langsung di HP Anda (aman & privat).">
     <meta name="theme-color" content="#2563eb">
-    <link rel="manifest" href="manifest.json">
     
     <!-- Data Terstruktur untuk Mesin Pencari AI & SEO -->
     <script type="application/ld+json">
@@ -233,30 +239,6 @@
                     <i class="fas fa-plus"></i> Tambah Video Lain
                 </button>
 
-                <!-- AREA WATERMARK KUSTOM -->
-                <div class="mb-6 p-4 border border-slate-100 rounded-xl bg-slate-50/50">
-                    <h4 class="text-sm font-semibold text-brand-navy mb-3 flex items-center gap-2">
-                        <i class="fas fa-stamp text-brand-purple"></i> Tambah Watermark (Opsional)
-                    </h4>
-                    <div class="flex flex-col sm:flex-row gap-3 mb-2">
-                        <label class="flex-grow cursor-pointer bg-white border border-slate-200 hover:border-brand-blue rounded-lg px-3 py-2.5 flex items-center justify-between transition-all shadow-sm">
-                            <span id="watermark-name" class="text-xs text-slate-500 truncate max-w-[150px] sm:max-w-[200px]">Pilih gambar (PNG/JPG)...</span>
-                            <i class="fas fa-upload text-brand-blue text-sm"></i>
-                            <input type="file" id="watermark-input" class="hidden" accept="image/png, image/jpeg">
-                        </label>
-                        <select id="watermark-position" class="bg-white border border-slate-200 rounded-lg px-3 py-2.5 text-xs text-slate-600 outline-none focus:border-brand-blue shadow-sm min-w-[120px]">
-                            <option value="bottom-right">Kanan Bawah</option>
-                            <option value="top-right">Kanan Atas</option>
-                            <option value="bottom-left">Kiri Bawah</option>
-                            <option value="top-left">Kiri Atas</option>
-                        </select>
-                    </div>
-                    <div id="watermark-preview-container" class="hidden relative inline-block mt-1">
-                        <img id="watermark-preview" src="" class="h-10 object-contain bg-slate-200/50 rounded p-1 border border-slate-200">
-                        <button id="remove-watermark" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] hover:bg-red-600 shadow-sm"><i class="fas fa-times"></i></button>
-                    </div>
-                </div>
-
                 <button id="merge-btn" class="w-full gradient-bg gradient-bg-hover text-white py-4 rounded-xl font-semibold text-lg shadow-glow hover:shadow-lg transition-all active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     <i class="fas fa-layer-group"></i> Gabungkan Video Sekarang
                 </button>
@@ -323,13 +305,13 @@
                 </div>
                 <div class="relative z-10 text-center flex flex-col items-center">
                     <div class="w-16 h-16 rounded-2xl bg-purple-50 text-brand-purple flex items-center justify-center text-2xl font-bold mb-4 shadow-sm border border-purple-100">2</div>
-                    <h3 class="text-lg font-semibold text-brand-navy mb-2">Kustomisasi (Opsional)</h3>
-                    <p class="text-sm text-slate-500">Hapus yang tidak perlu atau tambahkan watermark logo Anda.</p>
+                    <h3 class="text-lg font-semibold text-brand-navy mb-2">Susun & Proses</h3>
+                    <p class="text-sm text-slate-500">Atur urutan dan tekan tombol gabung.</p>
                 </div>
                 <div class="relative z-10 text-center flex flex-col items-center">
                     <div class="w-16 h-16 rounded-2xl bg-blue-50 text-brand-blue flex items-center justify-center text-2xl font-bold mb-4 shadow-sm border border-blue-100">3</div>
                     <h3 class="text-lg font-semibold text-brand-navy mb-2">Gabung & Unduh</h3>
-                    <p class="text-sm text-slate-500">Klik gabung, biarkan sistem bekerja, lalu unduh hasilnya.</p>
+                    <p class="text-sm text-slate-500">Simpan video hasil gabungan langsung ke perangkat.</p>
                 </div>
             </div>
         </div>
@@ -349,7 +331,7 @@
                         <span class="transition group-open:rotate-180 text-brand-blue"><i class="fas fa-chevron-down"></i></span>
                     </summary>
                     <div class="text-sm text-slate-500 px-5 pb-5 leading-relaxed">
-                        Ya, 100% gratis digunakan. Kami tidak menyisipkan watermark bawaan pada video hasil Anda. Anda bahkan bisa menambahkan watermark kustom Anda sendiri.
+                        Ya, 100% gratis digunakan tanpa watermark bawaan.
                     </div>
                 </details>
                 <details class="bg-white rounded-2xl shadow-sm border border-slate-100 group overflow-hidden">
@@ -358,7 +340,7 @@
                         <span class="transition group-open:rotate-180 text-brand-blue"><i class="fas fa-chevron-down"></i></span>
                     </summary>
                     <div class="text-sm text-slate-500 px-5 pb-5 leading-relaxed">
-                        Batas maksimal total ukuran file video yang diizinkan adalah **100MB** agar proses penggabungan aman dan lancar di perangkat seluler (mencegah HP *crash*).
+                        Batas maksimal total ukuran file video adalah **100MB** agar pemrosesan berjalan lancar di perangkat seluler.
                     </div>
                 </details>
             </div>
@@ -380,49 +362,32 @@
                         Solusi terbaik untuk menggabungkan video secara instan tanpa perlu instalasi rumit.
                     </p>
                 </div>
-                
-                <!-- Produk -->
                 <div>
                     <h4 class="text-white font-semibold mb-4 text-sm tracking-wide">Produk</h4>
                     <ul class="space-y-3 text-sm text-slate-400">
                         <li><a href="#beranda" class="hover:text-brand-blue transition-colors">Gabung Video</a></li>
-                        <li><a href="#beranda" class="hover:text-brand-blue transition-colors" onclick="openModal('Tambah Watermark', 'Fitur Tambah Watermark memungkinkan Anda menyematkan logo atau gambar (PNG/JPG) di sudut video hasil gabungan secara otomatis tanpa biaya tambahan.')">Tambah watermark</a></li>
                     </ul>
                 </div>
-
-                <!-- Bantuan -->
                 <div>
                     <h4 class="text-white font-semibold mb-4 text-sm tracking-wide">Bantuan</h4>
                     <ul class="space-y-3 text-sm text-slate-400">
                         <li><a href="#faq" class="hover:text-brand-blue transition-colors">FAQ</a></li>
                         <li><a href="#cara-pakai" class="hover:text-brand-blue transition-colors">Panduan</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Hubungi Kami', 'Anda dapat menghubungi tim dukungan GabungVideo melalui email di support@gabungvideo.online untuk masukan, kendala teknis, atau pertanyaan seputar layanan.')">Hubungi Kami</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Tentang Kami', 'GabungVideo adalah platform berbasis web PWA yang dirancang untuk memudahkan pengguna menggabungkan file video secara lokal di perangkat tanpa proses unggah ke server luar, menjaga keamanan privasi 100%.')">Tentang Kami</a></li>
                     </ul>
                 </div>
-
-                <!-- Legal -->
                 <div>
                     <h4 class="text-white font-semibold mb-4 text-sm tracking-wide">Legal</h4>
                     <ul class="space-y-3 text-sm text-slate-400">
-                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Privacy Policy', 'Kebijakan Privasi: Kami tidak pernah menyimpan, merekam, atau mengunggah video Anda ke server kami. Semua proses penggabungan video berjalan secara lokal di dalam browser perangkat Anda.')">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Terms of Service', 'Ketentuan Layanan: Layanan ini disediakan secara gratis untuk penggunaan pribadi maupun profesional. Pengguna bertanggung jawab penuh atas konten video yang mereka gabungkan.')">Terms of Service</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Cookie Policy', 'Kebijakan Cookie: Kami menggunakan penyimpanan lokal (localStorage) browser semata-mata untuk menyimpan preferensi aplikasi dan riwayat penggunaan demi kenyamanan Anda.')">Cookie Policy</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Copyright Policy', 'Kebijakan Hak Cipta: GabungVideo menghormati hak kekayaan intelektual. Pastikan Anda memiliki hak cipta atau izin atas video yang Anda gabungkan.')">Copyright Policy</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Privacy Policy', 'Kebijakan Privasi: Kami tidak pernah menyimpan, merekam, atau mengunggah video Anda ke server luar.')">Privacy Policy</a></li>
                     </ul>
                 </div>
-
-                <!-- Lainnya -->
                 <div>
                     <h4 class="text-white font-semibold mb-4 text-sm tracking-wide">Lainnya</h4>
                     <ul class="space-y-3 text-sm text-slate-400">
-                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Disclaimer', 'Penafian: Layanan disediakan apa adanya tanpa garansi kelancaran penuh pada perangkat dengan spesifikasi RAM yang sangat terbatas.')">Disclaimer</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Keamanan', 'Keamanan: Karena pemrosesan video dilakukan secara client-side, data video Anda aman dari risiko kebocoran data di server pihak ketiga.')">Keamanan</a></li>
-                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Status Layanan', 'Status Layanan: Semua sistem server web dan modul PWA GabungVideo saat ini beroperasi dengan normal (100% Uptime).')">Status Layanan</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors" onclick="openModal('Disclaimer', 'Penafian: Layanan disediakan apa adanya.')">Disclaimer</a></li>
                     </ul>
                 </div>
             </div>
-
             <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
                 <p>&copy; 2026 GabungVideo.online. Hak Cipta Dilindungi.</p>
                 <div class="flex gap-4 text-lg">
@@ -436,9 +401,6 @@
 
     <!-- SCRIPT JAVASCRIPT & PWA -->
     <script>
-        // ads.js belum aktif - placeholder
-        console.log("ads.js siap, belum ada iklan");
-
         function openModal(title, content) {
             event.preventDefault();
             document.getElementById('modal-title').textContent = title;
@@ -492,36 +454,7 @@
             }
         });
 
-        const watermarkInput = document.getElementById('watermark-input');
-        const watermarkName = document.getElementById('watermark-name');
-        const watermarkPreviewContainer = document.getElementById('watermark-preview-container');
-        const watermarkPreview = document.getElementById('watermark-preview');
-        const removeWatermarkBtn = document.getElementById('remove-watermark');
-        const watermarkPositionSelect = document.getElementById('watermark-position');
-        
-        let watermarkImageObj = null;
-
-        watermarkInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if(file) {
-                watermarkName.textContent = file.name;
-                const url = URL.createObjectURL(file);
-                watermarkPreview.src = url;
-                watermarkPreviewContainer.classList.remove('hidden');
-                
-                watermarkImageObj = new Image();
-                watermarkImageObj.src = url;
-            }
-        });
-
-        removeWatermarkBtn.addEventListener('click', () => {
-            watermarkInput.value = '';
-            watermarkName.textContent = 'Pilih gambar (PNG/JPG)...';
-            watermarkPreviewContainer.classList.add('hidden');
-            watermarkImageObj = null;
-        });
-
-        const MAX_FILE_SIZE_MB = 100; // Batas maksimal total ukuran 100 MB
+        const MAX_FILE_SIZE_MB = 100;
         let selectedFiles = [];
         let totalBytes = 0;
 
@@ -795,29 +728,6 @@
                             }
 
                             ctx.drawImage(video, startX, startY, drawWidth, drawHeight);
-                            
-                            if (watermarkImageObj && watermarkImageObj.complete) {
-                                const maxW = canvas.width * 0.15;
-                                const scale = maxW / watermarkImageObj.width;
-                                const wmWidth = watermarkImageObj.width * scale;
-                                const wmHeight = watermarkImageObj.height * scale;
-                                
-                                let wmX = 0, wmY = 0;
-                                const padding = 30;
-                                
-                                switch(watermarkPositionSelect.value) {
-                                    case 'top-left':
-                                        wmX = padding; wmY = padding; break;
-                                    case 'top-right':
-                                        wmX = canvas.width - wmWidth - padding; wmY = padding; break;
-                                    case 'bottom-left':
-                                        wmX = padding; wmY = canvas.height - wmHeight - padding; break;
-                                    case 'bottom-right':
-                                    default:
-                                        wmX = canvas.width - wmWidth - padding; wmY = canvas.height - wmHeight - padding; break;
-                                }
-                                ctx.drawImage(watermarkImageObj, wmX, wmY, wmWidth, wmHeight);
-                            }
 
                             const currentTotal = elapsedDuration + video.currentTime;
                             const percent = Math.min(100, Math.round((currentTotal / totalVideoDuration) * 100));
@@ -883,11 +793,6 @@
 
         function resetApp() {
             selectedFiles = [];
-            watermarkInput.value = '';
-            watermarkName.textContent = 'Pilih gambar (PNG/JPG)...';
-            watermarkPreviewContainer.classList.add('hidden');
-            watermarkImageObj = null;
-
             updateUI();
             showSection('upload-area');
             document.getElementById('progress-bar').style.width = '0%';
