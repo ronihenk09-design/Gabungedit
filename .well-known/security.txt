@@ -1,0 +1,4 @@
+Contact: mailto:rhenkdeveloper@gmail.com
+Expires: 2027-05-13T00:00:00.000Z
+Acknowledgments: https://gabungvideo.online/humans.txt
+Preferred-Languages: id, en
