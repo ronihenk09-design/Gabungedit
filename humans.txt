@@ -1,0 +1,10 @@
+/* TEAM */
+Developer: Roni Henk
+Contact: rhenkdeveloper@gmail.com
+Site: https://gabungvideo.online
+Location: Indonesia
+
+/* SITE */
+Last update: 2026/05/13
+Standards: HTML5, PWA, Client-side rendering, Privacy First
+Idea: Video merger cepat, gratis, tanpa menyimpan data user
