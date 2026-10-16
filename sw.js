@@ -1,23 +1,15 @@
 // Ganti nama versi cache
-const CACHE_NAME = 'gabungvideo-cache-v3';
+const CACHE_NAME = 'gabungvideo-cache-v4';
 
 // Daftar file yang disimpan agar web bisa dimuat sangat cepat & offline
 const urlsToCache = [
   './',
   './index.html',
   './manifest.json',
-  './icon-192-modern.png',
-  './icon-512-modern.png'
+  './icon-192x192.png',
+  './icon-512x512.png'
 ];
 
-// Daftar file yang disimpan agar web bisa dimuat sangat cepat & offline
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json'
-];
-
-// Proses Install & Simpan Cache
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -26,10 +18,9 @@ self.addEventListener('install', event => {
         return cache.addAll(urlsToCache);
       })
   );
-  self.skipWaiting();
+  self.skipWaiting(); 
 });
 
-// Proses Activate & Hapus Cache Lama
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
@@ -37,8 +28,7 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
-            console.log('Menghapus cache lama:', cacheName);
-            return caches.delete(cacheName);
+            return caches.delete(cacheName); 
           }
         })
       );
@@ -47,7 +37,6 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
-// Proses Fetch (Mengambil dari cache jika ada)
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
@@ -59,4 +48,3 @@ self.addEventListener('fetch', event => {
       })
   );
 });
-      
