@@ -1,0 +1,10 @@
+{
+  "sellers": [
+    {
+      "sellerId": "pub-0000000000000000",
+      "name": "GabungVideo",
+      "domain": "gabungvideo.online",
+      "sellerType": "PUBLISHER"
+    }
+  ]
+}
