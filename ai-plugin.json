@@ -1,0 +1,10 @@
+{
+  "name_for_human": "GabungVideo",
+  "name_for_model": "gabungvideo",
+  "description_for_human": "Gabungkan video hingga 25 menit tanpa watermark.",
+  "description_for_model": "Tool to merge multiple MP4/WebM videos into one video up to 25 minutes, client-side, no watermark.",
+  "api": { "type": "openapi", "url": "https://gabungvideo.online/openapi.json" },
+  "auth": { "type": "none" },
+  "logo_url": "https://gabungvideo.online/icon-512.png",
+  "contact_email": "rhenkdeveloper@gmail.com"
+}
