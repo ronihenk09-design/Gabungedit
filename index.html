@@ -17,7 +17,7 @@
       "@type": "WebApplication",
       "name": "GabungVideo",
       "url": "https://gabungvideo.online",
-      "description": "Aplikasi web gratis berbasis PWA untuk menggabungkan banyak video secara online tanpa watermark. Memiliki fitur rendering lokal client-side sehingga privasi aman tanpa unggah ke server. Mendukung durasi hingga 25 menit.",
+      "description": "Aplikasi web gratis berbasis PWA untuk menggabungkan banyak video secara online tanpa watermark. Memiliki fitur rendering lokal client-side sehingga privasi aman tanpa unggah ke server. Mendukung ukuran total file hingga 100MB.",
       "applicationCategory": "MultimediaApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires HTML5 Canvas and MediaRecorder API support",
@@ -28,7 +28,7 @@
       },
       "featureList": [
         "Gabung video gratis tanpa watermark",
-        "Mendukung total durasi hingga 25 menit",
+        "Mendukung ukuran total file hingga 100MB",
         "Bisa tambah watermark logo kustom",
         "Rendering lokal (Client-side) yang aman privasi",
         "Mendukung PWA (Bisa diinstal ke layar HP)"
@@ -195,7 +195,7 @@
                 Gabungkan Video <br> dengan <span class="gradient-text">Sangat Mudah</span>
             </h1>
             <p class="text-slate-500 text-sm sm:text-base mb-8">
-                Satukan momen berharga Anda hingga durasi 25 menit. Tidak perlu instalasi rumit, cukup pilih video dari galeri Anda, susun, dan simpan hasilnya.
+                Satukan momen berharga Anda dengan ukuran total file maksimal 100MB. Tidak perlu instalasi rumit, cukup pilih video dari galeri Anda, susun, dan simpan hasilnya.
             </p>
         </div>
 
@@ -204,7 +204,7 @@
             <!-- Pesan Error -->
             <div id="error-msg" class="hidden mb-6 p-4 bg-red-50 text-red-600 text-sm rounded-xl text-center items-center justify-center gap-2 font-medium border border-red-100 transition-all">
                 <i class="fas fa-exclamation-circle text-lg"></i>
-                <span id="error-text">Total durasi melebihi batas maksimal 25 menit!</span>
+                <span id="error-text">Total ukuran file melebihi batas maksimal 100MB!</span>
             </div>
 
             <!-- AREA UPLOAD -->
@@ -213,7 +213,7 @@
                     <i class="fas fa-cloud-upload-alt"></i>
                 </div>
                 <h3 class="text-lg font-semibold text-brand-navy mb-1 pointer-events-none">Sentuh untuk Pilih Video</h3>
-                <p class="text-sm text-slate-400 mb-6 pointer-events-none">Format: MP4, WebM (Maksimal Durasi Total 25 Menit)</p>
+                <p class="text-sm text-slate-400 mb-6 pointer-events-none">Format: MP4, WebM (Maksimal Ukuran Total 100MB)</p>
                 <button class="gradient-bg text-white px-6 py-2.5 rounded-full font-medium text-sm shadow-glow hover:shadow-lg transition-all active:scale-95 pointer-events-none">
                     Buka Galeri
                 </button>
@@ -224,7 +224,7 @@
             <div id="video-list-area" class="hidden">
                 <div class="flex justify-between items-center mb-4 px-1">
                     <h3 class="font-semibold text-brand-navy">Susun Video Anda (<span id="file-count">0</span>)</h3>
-                    <span id="total-duration" class="text-xs font-bold bg-blue-50 text-brand-blue px-3 py-1.5 rounded-full border border-blue-100">00:00</span>
+                    <span id="total-size" class="text-xs font-bold bg-blue-50 text-brand-blue px-3 py-1.5 rounded-full border border-blue-100">0 MB</span>
                 </div>
 
                 <div id="file-list" class="mb-4 space-y-3 max-h-60 overflow-y-auto pr-2 custom-scrollbar"></div>
@@ -273,7 +273,7 @@
             <div id="processing-area" class="hidden text-center py-6">
                 <div class="w-16 h-16 border-4 border-blue-100 border-t-brand-blue rounded-full animate-spin mx-auto mb-6"></div>
                 <h2 class="text-2xl font-bold text-brand-navy mb-2">Merender Video...</h2>
-                <p id="process-status" class="text-slate-500 mb-2 text-sm">Proses durasi panjang berjalan, harap biarkan layar tetap menyala...</p>
+                <p id="process-status" class="text-slate-500 mb-2 text-sm">Proses penggabungan berjalan, harap biarkan layar tetap menyala...</p>
                 <p id="countdown-timer" class="text-xs font-semibold text-brand-purple mb-6 bg-purple-50 py-1.5 px-4 rounded-full inline-block border border-purple-100">Sisa waktu merender: <span id="timer-value">Menghitung...</span></p>
                 
                 <div class="w-full bg-slate-100 rounded-full h-3 mb-2 overflow-hidden shadow-inner">
@@ -288,7 +288,7 @@
                     <i class="fas fa-check"></i>
                 </div>
                 <h3 class="text-2xl font-bold text-brand-navy mb-2">Selesai Dirender!</h3>
-                <p class="text-slate-500 text-sm mb-8">Video panjang Anda siap diunduh ke perangkat.</p>
+                <p class="text-slate-500 text-sm mb-8">Video gabungan Anda siap diunduh ke perangkat.</p>
                 
                 <a id="download-btn" href="#" class="wave-btn w-full py-4 rounded-xl font-semibold text-lg shadow-soft hover:shadow-lg transition-all active:scale-[0.98] flex items-center justify-center mb-5 block">
                     <div class="wave-fill"></div>
@@ -354,11 +354,11 @@
                 </details>
                 <details class="bg-white rounded-2xl shadow-sm border border-slate-100 group overflow-hidden">
                     <summary class="flex justify-between items-center font-medium text-brand-navy p-5 cursor-pointer select-none">
-                        Berapa batas maksimal durasi video?
+                        Berapa batas maksimal ukuran file video?
                         <span class="transition group-open:rotate-180 text-brand-blue"><i class="fas fa-chevron-down"></i></span>
                     </summary>
                     <div class="text-sm text-slate-500 px-5 pb-5 leading-relaxed">
-                        Batas maksimal total durasi yang diizinkan adalah **25 menit (1500 detik)** lengkap dengan hitung mundur waktu merender otomatis.
+                        Batas maksimal total ukuran file video yang diizinkan adalah **100MB** agar proses penggabungan aman dan lancar di perangkat seluler (mencegah HP *crash*).
                     </div>
                 </details>
             </div>
@@ -521,23 +521,23 @@
             watermarkImageObj = null;
         });
 
-        const MAX_DURATION = 1500; // 25 Menit
+        const MAX_FILE_SIZE_MB = 100; // Batas maksimal total ukuran 100 MB
         let selectedFiles = [];
-        let totalDuration = 0;
+        let totalBytes = 0;
 
         const dropZone = document.getElementById('upload-area');
         const fileInput = document.getElementById('file-input');
         const videoListArea = document.getElementById('video-list-area');
         const fileList = document.getElementById('file-list');
         const fileCountEl = document.getElementById('file-count');
-        const totalDurationEl = document.getElementById('total-duration');
+        const totalSizeEl = document.getElementById('total-size');
         const mergeBtn = document.getElementById('merge-btn');
         const errorMsg = document.getElementById('error-msg');
         
-        const formatTime = (seconds) => {
-            const m = Math.floor(seconds / 60).toString().padStart(2, '0');
-            const s = Math.floor(seconds % 60).toString().padStart(2, '0');
-            return `${m}:${s}`;
+        const formatBytes = (bytes) => {
+            if (bytes === 0) return '0 MB';
+            const mb = bytes / (1024 * 1024);
+            return mb.toFixed(1) + ' MB';
         };
 
         const getVideoMetadata = (file) => {
@@ -587,7 +587,7 @@
 
         const updateUI = async () => {
             fileList.innerHTML = '';
-            totalDuration = 0;
+            totalBytes = 0;
 
             if (selectedFiles.length === 0) {
                 videoListArea.classList.add('hidden');
@@ -604,8 +604,8 @@
             
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
+                totalBytes += file.size;
                 const meta = await getVideoMetadata(file);
-                totalDuration += meta.duration;
                 
                 const thumbHTML = meta.thumb 
                     ? `<img src="${meta.thumb}" class="object-cover w-full h-full opacity-80 shadow-inner">`
@@ -619,7 +619,7 @@
                     </div>
                     <div class="flex-grow overflow-hidden">
                         <h4 class="font-medium text-sm text-brand-navy truncate">${file.name}</h4>
-                        <p class="text-xs text-slate-400 mt-0.5">${meta.width}x${meta.height} • ${formatTime(meta.duration)}</p>
+                        <p class="text-xs text-slate-400 mt-0.5">${formatBytes(file.size)} • ${meta.width}x${meta.height}</p>
                     </div>
                     <button class="text-slate-300 hover:text-red-500 transition-colors p-3" onclick="removeFile(${i})">
                         <i class="fas fa-trash-alt text-lg"></i>
@@ -629,19 +629,20 @@
             }
 
             fileCountEl.textContent = selectedFiles.length;
-            totalDurationEl.textContent = formatTime(totalDuration);
+            totalSizeEl.textContent = formatBytes(totalBytes);
 
-            if (totalDuration > MAX_DURATION) {
-                totalDurationEl.classList.replace('text-brand-blue', 'text-red-600');
-                totalDurationEl.classList.replace('bg-blue-50', 'bg-red-50');
-                totalDurationEl.classList.replace('border-blue-100', 'border-red-100');
+            const totalSizeMB = totalBytes / (1024 * 1024);
+            if (totalSizeMB > MAX_FILE_SIZE_MB) {
+                totalSizeEl.classList.replace('text-brand-blue', 'text-red-600');
+                totalSizeEl.classList.replace('bg-blue-50', 'bg-red-50');
+                totalSizeEl.classList.replace('border-blue-100', 'border-red-100');
                 mergeBtn.disabled = true;
                 errorMsg.classList.remove('hidden');
                 errorMsg.classList.add('flex');
             } else {
-                totalDurationEl.classList.replace('text-red-600', 'text-brand-blue');
-                totalDurationEl.classList.replace('bg-red-50', 'bg-blue-50');
-                totalDurationEl.classList.replace('border-red-100', 'border-blue-100');
+                totalSizeEl.classList.replace('text-red-600', 'text-brand-blue');
+                totalSizeEl.classList.replace('bg-red-50', 'bg-blue-50');
+                totalSizeEl.classList.replace('border-red-100', 'border-blue-100');
                 mergeBtn.disabled = false;
                 errorMsg.classList.add('hidden');
                 errorMsg.classList.remove('flex');
@@ -713,10 +714,17 @@
             const firstVideoMeta = await getVideoMetadata(selectedFiles[0]);
             const canvas = document.createElement('canvas');
             
-            // OPTIMASI RAM: Batasi maks 720p (720x405 max untuk 16:9) agar HP tidak crash
-            const maxW = 720;
-            canvas.width = Math.min(firstVideoMeta.width || 720, maxW);
-            canvas.height = Math.min(firstVideoMeta.height || 720, maxW * 0.5625);
+            const MAX_DIMENSION = 720;
+            let origW = firstVideoMeta.width || 1280;
+            let origH = firstVideoMeta.height || 720;
+
+            if (origW > origH) {
+                canvas.width = Math.min(origW, MAX_DIMENSION);
+                canvas.height = Math.min(origH, Math.round((MAX_DIMENSION / origW) * origH));
+            } else {
+                canvas.height = Math.min(origH, MAX_DIMENSION);
+                canvas.width = Math.min(origW, Math.round((MAX_DIMENSION / origH) * origW));
+            }
 
             const ctx = canvas.getContext('2d');
 
@@ -731,7 +739,6 @@
             gainNode.connect(audioDest);
             oscillator.start();
 
-            // OPTIMASI FPS: Turunkan dari 30fps ke 24fps agar render lebih ringan
             const canvasStream = canvas.captureStream(24); 
             const combinedStream = new MediaStream([
                 ...canvasStream.getVideoTracks(),
@@ -747,6 +754,11 @@
             });
 
             recorder.start();
+            let totalVideoDuration = 0;
+            for(let f of selectedFiles) {
+                let meta = await getVideoMetadata(f);
+                totalVideoDuration += meta.duration;
+            }
             let elapsedDuration = 0;
 
             for (let i = 0; i < selectedFiles.length; i++) {
@@ -808,7 +820,7 @@
                             }
 
                             const currentTotal = elapsedDuration + video.currentTime;
-                            const percent = Math.min(100, Math.round((currentTotal / totalDuration) * 100));
+                            const percent = Math.min(100, Math.round((currentTotal / totalVideoDuration) * 100));
                             progressBar.style.width = `${percent}%`;
                             progressText.textContent = `${percent}%`;
 
@@ -847,7 +859,7 @@
 
             const downloadBtn = document.getElementById('download-btn');
             downloadBtn.href = finalUrl;
-            downloadBtn.download = `GabungVideo_Panjang_${new Date().getTime()}.webm`;
+            downloadBtn.download = `GabungVideo_Hasil_${new Date().getTime()}.webm`;
 
             showSection('result-area');
         });
