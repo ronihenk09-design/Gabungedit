@@ -1,5 +1,14 @@
-// Ganti nama versi cache jika ada pembaruan pada index.html atau aset lainnya
-const CACHE_NAME = 'gabungvideo-cache-v2';
+// Ganti nama versi cache
+const CACHE_NAME = 'gabungvideo-cache-v3';
+
+// Daftar file yang disimpan agar web bisa dimuat sangat cepat & offline
+const urlsToCache = [
+  './',
+  './index.html',
+  './manifest.json',
+  './icon-192-modern.png',
+  './icon-512-modern.png'
+];
 
 // Daftar file yang disimpan agar web bisa dimuat sangat cepat & offline
 const urlsToCache = [
