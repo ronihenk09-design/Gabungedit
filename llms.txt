@@ -1,0 +1,12 @@
+# GabungVideo
+
+> Aplikasi web gratis berbasis PWA untuk menggabungkan banyak video secara online tanpa watermark. Fitur rendering lokal client-side sehingga privasi aman tanpa unggah ke server. Mendukung MP4, WebM hingga total 25 menit.
+
+## Features
+- Gratis 100% tanpa watermark bawaan
+- Proses di browser HP, tidak upload ke server
+- Bisa tambah watermark logo sendiri
+- Cepat, tanpa instalasi
+
+## How to use
+Buka https://gabungvideo.online -> Pilih 2 video atau lebih -> Susun -> Klik Gabung & Unduh
