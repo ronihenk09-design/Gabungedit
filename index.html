@@ -144,7 +144,7 @@
     <div class="blob bg-purple-400 w-72 h-72 rounded-full top-40 right-0 translate-x-1/3"></div>
 
     <!-- BANNER PWA (MELAYANG) -->
-    <div id="pwa-install-container" class="hidden fixed top-24 left-1/2 transform -translate-x-1/2 w-11/12 max-w-sm z-50 bg-white border border-slate-100 shadow-2xl rounded-2xl p-4 items-center justify-between transition-all">
+    <div id="pwa-install-container" class="hidden fixed top-24 left-1/2 transform -translate-x-1/2 w-11/12 max-w-sm z-50 bg-white border border-slate-100 shadow-2xl rounded-2xl p-4 items-center justify-between transition-all banner-masuk">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center text-white shadow-glow">
                 <i class="fas fa-arrow-alt-circle-down text-xl"></i>
@@ -359,7 +359,7 @@
         </div>
     </section>
 
-    <!-- KENAPA PILIH GABUNG VIDEO AI (SECTION BARU) -->
+    <!-- KENAPA PILIH GABUNG VIDEO AI -->
     <section class="bg-white py-16 border-t border-slate-100">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl font-bold text-brand-navy mb-6">Kenapa Pilih Gabung Video AI Tanpa Watermark?</h2>
@@ -421,7 +421,7 @@
         </div>
     </footer>
 
-    <!-- SCRIPT JAVASCRIPT & PWA -->
+    <!-- SCRIPT JAVASCRIPT -->
     <script>
         function openModal(title, content) {
             event.preventDefault();
@@ -441,40 +441,6 @@
                     .catch(err => console.log('Gagal mendaftar Service Worker', err));
             });
         }
-
-        const pwaInstallContainer = document.getElementById('pwa-install-container');
-        const pwaInstallBtn = document.getElementById('pwa-install-btn');
-        const pwaCloseBtn = document.getElementById('pwa-close-btn');
-        let deferredPrompt;
-
-        setTimeout(() => {
-            pwaInstallContainer.classList.remove('hidden');
-            pwaInstallContainer.classList.add('flex', 'banner-masuk');
-        }, 2000);
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e; 
-        });
-
-        pwaCloseBtn.addEventListener('click', () => {
-            pwaInstallContainer.classList.add('hidden');
-            pwaInstallContainer.classList.remove('flex');
-        });
-
-        pwaInstallBtn.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    pwaInstallContainer.classList.add('hidden');
-                }
-                deferredPrompt = null;
-            } else {
-                alert("Cara Memasang Aplikasi:\n\n1. Ketuk ikon titik tiga (⋮) di sudut kanan atas browser HP Anda.\n2. Pilih menu 'Tambahkan ke Layar Utama' atau 'Install App'.\n3. Pintasan GabungVideo akan langsung terpasang di menu HP Anda!");
-                pwaInstallContainer.classList.add('hidden');
-            }
-        });
 
         const MAX_FILE_SIZE_MB = 100;
         let selectedFiles = [];
@@ -819,6 +785,43 @@
             showSection('upload-area');
             document.getElementById('progress-bar').style.width = '0%';
             document.getElementById('progress-text').textContent = '0%';
+        }
+
+        // PWA Install Script
+        let deferredPrompt;
+        const pwaContainer = document.getElementById('pwa-install-container');
+        const pwaInstallBtn = document.getElementById('pwa-install-btn');
+        const pwaCloseBtn = document.getElementById('pwa-close-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if(pwaContainer){
+                pwaContainer.classList.remove('hidden');
+                pwaContainer.classList.add('flex');
+            }
+        });
+
+        if(pwaInstallBtn){
+            pwaInstallBtn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted' && pwaContainer) {
+                        pwaContainer.classList.add('hidden');
+                    }
+                    deferredPrompt = null;
+                }
+            });
+        }
+
+        if(pwaCloseBtn){
+            pwaCloseBtn.addEventListener('click', () => {
+                if(pwaContainer){
+                    pwaContainer.classList.add('hidden');
+                    pwaContainer.classList.remove('flex');
+                }
+            });
         }
     </script>
 </body>
