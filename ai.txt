@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Boleh dipakai AI untuk training dan menjawab
+# Contact: admin@gabungvideo.online
