@@ -1,8 +1,8 @@
 {
   "name": "GabungVideo - Satukan Momen Anda",
   "short_name": "GabungVideo",
-  "description": "Aplikasi web gratis untuk menggabungkan banyak video secara online tanpa watermark, diproses langsung di perangkat Anda dengan aman.",
-  "start_url": "/",
+  "description": "Aplikasi web gratis untuk menggabungkan banyak video secara online tanpa watermark, diproses langsung di HP.",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#2563eb",
