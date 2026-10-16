@@ -1,0 +1,7 @@
+{
+  "name": "gabungvideo",
+  "version": "1.0",
+  "description": "Merge videos client-side without watermark",
+  "contact": "rhenkdeveloper@gmail.com",
+  "tools": [{ "name": "merge_videos", "endpoint": "https://gabungvideo.online/" }]
+}
