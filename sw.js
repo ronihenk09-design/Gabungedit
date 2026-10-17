@@ -1,12 +1,13 @@
-const CACHE_NAME = 'gabungvideo-v5';
+const CACHE_NAME = 'gabungvideo-v6';
 const CORE_ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './favicon-512.png'
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/favicon-192.png',
+  '/favicon-512.png',
+  '/favicon-48.png'
 ];
 
-// Install - cache core aja
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -16,14 +17,13 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Activate - hapus cache lama v1,v2,v3,v4
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
-            console.log('Deleting old cache:', key);
+            console.log("Deleting old cache:", key);
             return caches.delete(key);
           }
         })
@@ -33,36 +33,24 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch - PINTAR: Jangan cache iklan & manifest pakai network-first
 self.addEventListener('fetch', (event) => {
   const url = event.request.url;
-
-  // 1. JANGAN CACHE IKLAN ADSTERRA & ANALYTICS
-  if (
-    url.includes('highperformanceformat.com') ||
-    url.includes('adsterra') ||
-    url.includes('googlesyndication') ||
-    url.includes('google-analytics')
-  ) {
+  // Jangan cache iklan & analytics
+  if (url.includes('highperformanceformat.com') || url.includes('adsterra') || url.includes('googlesyndication') || url.includes('google-analytics')) {
     return;
   }
-
-  // 2. Untuk manifest & icon: NETWORK FIRST
-  if (url.includes('manifest.json') || url.includes('favicon-') || url.includes('icon-')) {
+  // Manifest & icon selalu ambil yang baru
+  if (url.includes('manifest.json') || url.includes('favicon-')) {
     event.respondWith(
-      fetch(event.request)
-        .then((response) => {
-          return caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, response.clone());
-            return response;
-          });
-        })
-        .catch(() => caches.match(event.request))
+      fetch(event.request).then((response) => {
+        return caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, response.clone());
+          return response;
+        });
+      }).catch(() => caches.match(event.request))
     );
     return;
   }
-
-  // 3. Untuk file lain: CACHE FIRST
   event.respondWith(
     caches.match(event.request).then((cached) => {
       return cached || fetch(event.request);
