@@ -143,21 +143,19 @@
     <div class="blob bg-blue-400 w-72 h-72 rounded-full top-0 left-0 -translate-x-1/2 -translate-y-1/2"></div>
     <div class="blob bg-purple-400 w-72 h-72 rounded-full top-40 right-0 translate-x-1/3"></div>
 
-    <!-- BANNER PWA (MELAYANG) -->
-    <div id="pwa-install-container" class="hidden fixed top-24 left-1/2 transform -translate-x-1/2 w-11/12 max-w-sm z-50 bg-white border border-slate-100 shadow-2xl rounded-2xl p-4 items-center justify-between transition-all banner-masuk">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center text-white shadow-glow">
-                <i class="fas fa-arrow-alt-circle-down text-xl"></i>
-            </div>
-            <div>
-                <p class="font-bold text-brand-navy text-sm leading-tight">Pasang Aplikasi</p>
-                <p class="text-[11px] text-slate-500 mt-0.5">Akses lebih cepat dari layar HP</p>
-            </div>
+    <!-- BANNER PWA (MELAYANG) TERBARU -->
+    <div id="pwa-install-container" class="hidden fixed top-4 left-4 right-4 z-[9999] bg-white border border-gray-200 shadow-2xl rounded-2xl p-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="/favicon-48.png" class="w-10 h-10 rounded-lg">
+        <div>
+          <p class="font-bold text-sm">Pasang Aplikasi</p>
+          <p class="text-xs text-gray-500">GabungVideo AI lebih cepat</p>
         </div>
-        <div class="flex items-center gap-2">
-            <button id="pwa-install-btn" class="gradient-bg text-white px-4 py-2 rounded-full text-xs font-semibold shadow-soft active:scale-95">Instal</button>
-            <button id="pwa-close-btn" class="text-slate-400 hover:text-red-500 w-8 h-8 flex items-center justify-center rounded-full bg-slate-50"><i class="fas fa-times"></i></button>
-        </div>
+      </div>
+      <div class="flex gap-2">
+        <button id="pwa-install-btn" class="bg-[#6366f1] text-white px-4 py-2 rounded-full text-sm font-bold">Instal</button>
+        <button id="pwa-close-btn" class="bg-gray-100 px-3 py-2 rounded-full text-sm">X</button>
+      </div>
     </div>
 
     <!-- MODAL POPUP INFORMASI MENU FOOTER -->
@@ -243,13 +241,6 @@
                 <button onclick="document.getElementById('file-input').click()" class="w-full py-3.5 border-2 border-dashed border-blue-200 text-brand-blue rounded-xl font-medium text-sm hover:bg-blue-50 transition-colors flex items-center justify-center gap-2 mb-6">
                     <i class="fas fa-plus"></i> Tambah Video Lain
                 </button>
-
-                <!-- AREA WATERMARK KUSTOM (Opsional, hapus jika tidak ingin ada fitur ini di versi basic) -->
-                <!-- 
-                <div class="mb-6 p-4 border border-slate-100 rounded-xl bg-slate-50/50">
-                    ... kode watermark kustom ...
-                </div>
-                -->
 
                 <button id="merge-btn" class="w-full gradient-bg gradient-bg-hover text-white py-4 rounded-xl font-semibold text-lg shadow-glow hover:shadow-lg transition-all active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     <i class="fas fa-layer-group"></i> Gabungkan Video Sekarang
@@ -421,8 +412,9 @@
         </div>
     </footer>
 
-    <!-- SCRIPT JAVASCRIPT -->
+    <!-- SCRIPT JAVASCRIPT & PWA -->
     <script>
+        // Modal Logic
         function openModal(title, content) {
             event.preventDefault();
             document.getElementById('modal-title').textContent = title;
@@ -434,14 +426,43 @@
             document.getElementById('info-modal').classList.add('hidden');
         }
 
+        // PWA & Service Worker Logic
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('Service Worker Terdaftar!'))
-                    .catch(err => console.log('Gagal mendaftar Service Worker', err));
+            navigator.serviceWorker.register('/sw.js');
+        }
+        let deferredPrompt;
+        const pwaContainer = document.getElementById('pwa-install-container');
+        const pwaInstallBtn = document.getElementById('pwa-install-btn');
+        const pwaCloseBtn = document.getElementById('pwa-close-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if(pwaContainer){
+                pwaContainer.classList.remove('hidden');
+                pwaContainer.classList.add('flex');
+            }
+        });
+
+        if(pwaInstallBtn){
+            pwaInstallBtn.addEventListener('click', async () => {
+                if (!deferredPrompt) {
+                    alert('Ketuk titik tiga > Tambahkan ke Layar Utama');
+                    return;
+                }
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if(pwaContainer) pwaContainer.classList.add('hidden');
+                deferredPrompt = null;
+            });
+        }
+        if(pwaCloseBtn){
+            pwaCloseBtn.addEventListener('click', () => {
+                pwaContainer.classList.add('hidden');
             });
         }
 
+        // Video Merging Logic
         const MAX_FILE_SIZE_MB = 100;
         let selectedFiles = [];
         let totalBytes = 0;
@@ -785,43 +806,6 @@
             showSection('upload-area');
             document.getElementById('progress-bar').style.width = '0%';
             document.getElementById('progress-text').textContent = '0%';
-        }
-
-        // PWA Install Script
-        let deferredPrompt;
-        const pwaContainer = document.getElementById('pwa-install-container');
-        const pwaInstallBtn = document.getElementById('pwa-install-btn');
-        const pwaCloseBtn = document.getElementById('pwa-close-btn');
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            if(pwaContainer){
-                pwaContainer.classList.remove('hidden');
-                pwaContainer.classList.add('flex');
-            }
-        });
-
-        if(pwaInstallBtn){
-            pwaInstallBtn.addEventListener('click', async () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    const { outcome } = await deferredPrompt.userChoice;
-                    if (outcome === 'accepted' && pwaContainer) {
-                        pwaContainer.classList.add('hidden');
-                    }
-                    deferredPrompt = null;
-                }
-            });
-        }
-
-        if(pwaCloseBtn){
-            pwaCloseBtn.addEventListener('click', () => {
-                if(pwaContainer){
-                    pwaContainer.classList.add('hidden');
-                    pwaContainer.classList.remove('flex');
-                }
-            });
         }
     </script>
 </body>
